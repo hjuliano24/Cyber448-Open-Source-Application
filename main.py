@@ -45,18 +45,6 @@ home = Label(main,
 home.pack()
 
 #Functions for each API Windows
-"""
-Create functions for every buttons
-"""
-def create_window(button):
-    title_text = button.cget("text")
-    
-    new_window = Tk()
-    new_window.title(title_text)
-    new_window.geometry("400x400")
-    
-    main.destroy()  #closes main window
-
 #MalShare window function
 def malShare_window():
     new_window = tk.Toplevel(main)
@@ -92,6 +80,20 @@ def malShare_window():
               activebackground='#FF0000', 
               activeforeground='white',
               width=20).pack(pady=20)
+    #Back Button
+    def back():
+        new_window.destroy()
+        main.deiconify()
+    back_button = Button(new_window, 
+                           text="Back", 
+                           command=back,
+                           font=('Courier New', 12), 
+                           bg="#00C3EB", 
+                           fg="black", 
+                           activebackground='#FF0000', 
+                           activeforeground='white',
+                           width=20)
+    back_button.pack(pady=20)
     main.withdraw()  #closes main window
 
 #URLScan Window Function
@@ -112,8 +114,13 @@ def urlScan_window():
     entry = Entry(new_window, font=('Courier New', 12))
     entry.pack(pady=20)
     #Submit Button
+    from URLScan import get_url_scan
     def on_submit():
-        return
+        import json
+        url_value = entry.get()        
+        result = get_url_scan(url_value)
+        output_box.delete("1.0", tk.END)
+        output_box.insert("1.0", json.dumps(result, indent=4))
     submit_button = Button(new_window, 
                            text="Submit", 
                            command=on_submit,
@@ -124,6 +131,23 @@ def urlScan_window():
                            activeforeground='white',
                            width=20)
     submit_button.pack()
+    #Output box
+    output_box = tk.Text(new_window, height=20, width=70, font=('Courier New', 10))
+    output_box.pack(pady=20)
+    #Back Button
+    def back():
+        new_window.destroy()
+        main.deiconify()
+    back_button = Button(new_window, 
+                           text="Back", 
+                           command=back,
+                           font=('Courier New', 12), 
+                           bg="#00C3EB", 
+                           fg="black", 
+                           activebackground='#FF0000', 
+                           activeforeground='white',
+                           width=20)
+    back_button.pack(pady=20)
     main.withdraw()  #closes main window
 
 #WebOfTrust Function
@@ -156,6 +180,20 @@ def webOfTrust_window():
                            activeforeground='white',
                            width=20)
     submit_button.pack()
+    #Back Button
+    def back():
+        new_window.destroy()
+        main.deiconify()
+    back_button = Button(new_window, 
+                           text="Back", 
+                           command=back,
+                           font=('Courier New', 12), 
+                           bg="#00C3EB", 
+                           fg="black", 
+                           activebackground='#FF0000', 
+                           activeforeground='white',
+                           width=20)
+    back_button.pack(pady=20)
     main.withdraw()  #closes main window
 
 #VeriPhone Function
@@ -188,6 +226,20 @@ def veriPhone():
                            activeforeground='white',
                            width=20)
     submit_button.pack()
+    #Back Button
+    def back():
+        new_window.destroy()
+        main.deiconify()
+    back_button = Button(new_window, 
+                           text="Back", 
+                           command=back,
+                           font=('Courier New', 12), 
+                           bg="#00C3EB", 
+                           fg="black", 
+                           activebackground='#FF0000', 
+                           activeforeground='white',
+                           width=20)
+    back_button.pack(pady=20)
     main.withdraw()  #closes main window
 
 #Function for virus total 
@@ -234,7 +286,20 @@ def virusTotal_window():
                            activeforeground='white',
                            width=20)
     submit_button.pack(pady=20)
-
+    #Back Button
+    def back():
+        new_window.destroy()
+        main.deiconify()
+    back_button = Button(new_window, 
+                           text="Back", 
+                           command=back,
+                           font=('Courier New', 12), 
+                           bg="#00C3EB", 
+                           fg="black", 
+                           activebackground='#FF0000', 
+                           activeforeground='white',
+                           width=20)
+    back_button.pack(pady=20)
     main.withdraw()  #closes main window
 
 #Main window buttons
