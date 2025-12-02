@@ -190,14 +190,20 @@ def webOfTrust_window():
     from web_of_trust import get_wot_project
     def on_submit():
         import json
-        url_value = entry.get().strip()
-        if not url_value:
+        from web_of_trust import get_wot_for_query
+
+        query = entry.get().strip()
+        if not query:
             output_box.delete("1.0", tk.END)
-            output_box.insert("1.0", json.dumps(result, indent=4))
+            output_box.insert("1.0", "Please enter a URL or IP address to search.")
             return
-        result = get_wot_project(url_value)
+
+        result = get_wot_for_query(query)
         output_box.delete("1.0", tk.END)
-        output_box.insert("1.0", json.dumps(result, indent=4))
+        try:
+            output_box.insert("1.0", json.dumps(result, indent=4))
+        except TypeError:
+            output_box.insert("1.0", str(result))
     submit_button = Button(new_window, 
                            text="Submit", 
                            command=on_submit,
@@ -207,7 +213,10 @@ def webOfTrust_window():
                            activebackground='#FF0000', 
                            activeforeground='white',
                            width=20)
-    submit_button.pack(pady=10)
+    submit_button.pack()
+    # Output box to show JSON result
+    output_box = tk.Text(new_window, height=20, width=70, font=('Courier New', 10))
+    output_box.pack(pady=20)
     #Back Button
     def back():
         new_window.destroy()
@@ -246,13 +255,14 @@ def veriPhone():
     from phoneScan import get_phone_number
     def on_submit():
         import json
-        number = phone_entry.get().strip()
-        country = cc_entry.get().strip()
-        data = {
-            "number": number,
-            "country_code": country if country else None
-        }
-        result = get_phone_number(data)
+        from phoneScan import get_phone_info
+
+        phone_value = phone_entry.get().strip()
+        if not phone_value:
+            output_box.delete("1.0", tk.END)
+            output_box.insert("1.0", "Please enter a phone number.")
+            return
+        result = get_phone_info(phone_value)
         output_box.delete("1.0", tk.END)
         output_box.insert("1.0", json.dumps(result, indent=4))
     submit_button = Button(new_window, 
@@ -264,8 +274,8 @@ def veriPhone():
                            activebackground='#FF0000', 
                            activeforeground='white',
                            width=20)
-    submit_button.pack(pady=10)
-    #Output box
+    submit_button.pack()
+    # Output box
     output_box = tk.Text(new_window, height=20, width=70, font=('Courier New', 10))
     output_box.pack(pady=20)
     #Back Button
